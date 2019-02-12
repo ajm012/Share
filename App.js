@@ -43,11 +43,9 @@ export default class App extends Component {
 
   updatePhone(value) {
     this.setState({ phone: value });
-    
   }
 
   generateQR() {
-    alert(this.state.phone);
     this.setState({
       qrValue: this.state.phone
     });
