@@ -2,14 +2,13 @@ import React, {
   Component
 } from 'react';
 import {
-  Platform,
+  ScrollView,
   StyleSheet,
-  Text,
   View,
-  Button
 } from 'react-native';
 import PhoneInput from 'react-native-phone-input';
 import CountryPicker from 'react-native-country-picker-modal';
+import { SocialIcon } from 'react-native-elements'
 
 import Profile from "../services/profile";
 
@@ -50,25 +49,62 @@ export default class AddContact extends Component {
   render() {
     return (
       <View style={ styles.container }>
-        <PhoneInput
-          ref={ (ref) => {
-            this.phone = ref;
-          } }
-          onPressFlag={ this.onPressFlag }
-          style={ styles.phoneInput }
-          onChangePhoneNumber={ (phoneNumber) => this.updatePhone(phoneNumber) }
-        />
+        <ScrollView>
+          <PhoneInput
+            ref={ (ref) => {
+              this.phone = ref;
+            } }
+            onPressFlag={ this.onPressFlag }
+            style={ styles.phoneInput }
+            onChangePhoneNumber={ (phoneNumber) => this.updatePhone(phoneNumber) }
+          />
 
-        <CountryPicker
-          ref={ (ref) => {
-            this.countryPicker = ref;
-          } }
-          onChange={ value => this.selectCountry(value) }
-          translation="eng"
-          cca2={ this.state.cca2 }
-        >
-          <View />
-        </CountryPicker>
+          <CountryPicker
+            ref={ (ref) => {
+              this.countryPicker = ref;
+            } }
+            onChange={ value => this.selectCountry(value) }
+            translation="eng"
+            cca2={ this.state.cca2 }
+          >
+            <View />
+          </CountryPicker>
+          <SocialIcon
+            title='Connect Facebook'
+            button
+            type='facebook'
+          />
+          <SocialIcon
+            title='Connect Twitter'
+            button
+            type='twitter'
+          />
+          <SocialIcon
+            title="Connect LinkedIn"
+            button
+            type='linkedin'
+          />
+          <SocialIcon
+            title="Connect Instagram"
+            button
+            type='instagram'
+          />
+          <SocialIcon
+            title="Connect Pinterest"
+            button
+            type='pinterest'
+          />
+          <SocialIcon
+            title="Connect Soundcloud"
+            button
+            type='soundcloud'
+          />
+          <SocialIcon
+            title="Connect Twitch"
+            button
+            type='twitch'
+          />
+        </ScrollView>
       </View>
     );
   }
@@ -77,11 +113,10 @@ export default class AddContact extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    paddingHorizontal: 16
   },
   phoneInput: {
-    paddingLeft: 16
+    paddingVertical: 20
   }
 });

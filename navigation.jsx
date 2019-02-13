@@ -7,12 +7,13 @@ import {
 } from "react-navigation";
 import { Image, Platform, TouchableOpacity } from "react-native";
 import Icon_Ionic from "react-native-vector-icons/Ionicons";
+
 import LinearGradient from "react-native-linear-gradient";
 
 import colors from "./src/assets/values/colors";
 
 /* ----------------------- PAGES ----------------------- */
-import Share from "./src/pages/home";
+import Share from "./src/pages/share";
 import AddContact from "./src/pages/addContact";
 import Scan from "./src/pages/scanner";
 /* ----------------------------------------------------- */
@@ -50,41 +51,36 @@ const gradient = (
     end={ {
       x: 1,
       y: 0
-    } }>
-  </LinearGradient>
+    } } />
 );
 
 const ShareStack = createStackNavigator(
   {
     Share: {
       screen: Share,
-    },
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => {
-      return {
-        title: "Share",
-        headerBackground: gradient,
-        headerTintColor: colors.white,
-        headerRight: createAccountButton(navigation)
+      navigationOptions: {
+        title: "Share"
       }
-    }
-  }
-);
-
-const ContactStack = createStackNavigator(
-  {
+    },
     AddContact: {
-      screen: AddContact
+      screen: AddContact,
+      navigationOptions: {
+        title: "Account"
+      }
     },
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: "Contact",
         headerBackground: gradient,
         headerTintColor: colors.white,
-        headerRight: createAccountButton(navigation)
+        headerRight: createAccountButton(navigation),
+        headerStyle: {
+          borderBottomWidth: 0,
+          elevation: 0,
+          shadowOpacity: 0
+        },
+        headerBackTitle: null
       }
     }
   }
@@ -93,27 +89,34 @@ const ContactStack = createStackNavigator(
 const ScanStack = createStackNavigator(
   {
     Scan: {
-      screen: Scan
+      screen: Scan,
+      navigationOptions: {
+        title: "Scan"
+      }
+    },
+    AddContact: {
+      screen: AddContact,
+      navigationOptions: {
+        title: "Account"
+      }
     },
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: "Scan",
         headerBackground: gradient,
         headerTintColor: colors.white,
-        headerRight: createAccountButton(navigation)
+        headerRight: createAccountButton(navigation),
+        headerStyle: {
+          borderBottomWidth: 0,
+          elevation: 0,
+          shadowOpacity: 0
+        },
+        headerBackTitle: null
       }
     }
   }
 );
-
-ContactStack.navigationOptions = ({ navigation }) => {
-  let navigationOptions = {};
-  navigationOptions.header = createHeader();
-  navigationOptions.headerRight = createAccountButton(navigation);
-  return navigationOptions;
-}
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -123,24 +126,7 @@ const TabNavigator = createBottomTabNavigator(
         tabBarIcon: ({ focused }) => {
           return (
             <Icon_Ionic
-              name={ Platform.select({ ios: "ios-home", android: "md-home" }) }
-              size={ 24 }
-              color={ focused ? colors.colorPrimary : colors.grey }
-            />
-          );
-        }
-      }
-    },
-    Contact: {
-      screen: ContactStack,
-      navigationOptions: {
-        tabBarIcon: ({ focused }) => {
-          return (
-            <Icon_Ionic
-              name={ Platform.select({
-                ios: "ios-filing",
-                android: "md-filing"
-              }) }
+              name={ Platform.select({ ios: "ios-share", android: "md-share" }) }
               size={ 24 }
               color={ focused ? colors.colorPrimary : colors.grey }
             />
