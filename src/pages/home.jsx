@@ -11,6 +11,8 @@ import QRCode from 'react-native-qrcode';
 
 import Profile from "../services/profile";
 
+import colors from "../assets/values/colors";
+
 
 export default class Home extends Component {
   constructor() {
@@ -33,14 +35,13 @@ export default class Home extends Component {
         loading: false,
         profile: res
       });
-    });
-    this.setState({
-      qrValue: this.state.profile.phoneNumber
+      this.setState({
+        qrValue: this.state.profile.phoneNumber
+      });
     });
   }
 
   renderQR() {
-    alert(this.state.qrValue);
     if (this.state.qrValue === '') {
       return;
     } else {
@@ -48,8 +49,8 @@ export default class Home extends Component {
         <QRCode
           value={ this.state.qrValue }
           size={ 200 }
-          bgColor='purple'
-          fgColor='white' />
+          bgColor={ colors.colorPrimary }
+          fgColor={ colors.white } />
       );
     }
   }
