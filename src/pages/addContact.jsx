@@ -10,10 +10,11 @@ import {
 } from 'react-native';
 import PhoneInput from 'react-native-phone-input';
 import CountryPicker from 'react-native-country-picker-modal';
-import QRCode from 'react-native-qrcode';
+
+import Profile from "../services/profile";
 
 
-export default class App extends Component {
+export default class AddContact extends Component {
   constructor() {
     super();
 
@@ -43,53 +44,31 @@ export default class App extends Component {
 
   updatePhone(value) {
     this.setState({ phone: value });
-  }
-
-  generateQR() {
-    this.setState({
-      qrValue: this.state.phone
-    });
-  }
-
-  renderQR() {
-    if (this.state.qrValue === '') {
-      return;
-    } else {
-      return (
-        <QRCode
-            value={this.state.qrValue}
-            size={200}
-            bgColor='purple'
-            fgColor='white'/>
-      );
-    }
+    Profile.addToProfile("phoneNumber", value);
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={ styles.container }>
         <PhoneInput
-          ref={(ref) => {
+          ref={ (ref) => {
             this.phone = ref;
-          }}
-          onPressFlag={this.onPressFlag}
-          style={styles.phoneInput}
-          onChangePhoneNumber={(phoneNumber) => this.updatePhone(phoneNumber)}
+          } }
+          onPressFlag={ this.onPressFlag }
+          style={ styles.phoneInput }
+          onChangePhoneNumber={ (phoneNumber) => this.updatePhone(phoneNumber) }
         />
 
         <CountryPicker
-          ref={(ref) => {
+          ref={ (ref) => {
             this.countryPicker = ref;
-          }}
-          onChange={value => this.selectCountry(value)}
+          } }
+          onChange={ value => this.selectCountry(value) }
           translation="eng"
-          cca2={this.state.cca2}
+          cca2={ this.state.cca2 }
         >
           <View />
         </CountryPicker>
-        <Button title="Generate Connection" onPress={() => this.generateQR()}>
-        </Button>
-        {this.renderQR()}
       </View>
     );
   }
