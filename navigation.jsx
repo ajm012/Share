@@ -12,8 +12,9 @@ import LinearGradient from "react-native-linear-gradient";
 import colors from "./src/assets/values/colors";
 
 /* ----------------------- PAGES ----------------------- */
-import Home from "./src/pages/home";
+import Share from "./src/pages/home";
 import AddContact from "./src/pages/addContact";
+import Scan from "./src/pages/scanner";
 /* ----------------------------------------------------- */
 
 function createHeader(title) {
@@ -53,16 +54,16 @@ const gradient = (
   </LinearGradient>
 );
 
-const HomeStack = createStackNavigator(
+const ShareStack = createStackNavigator(
   {
-    Home: {
-      screen: Home,
+    Share: {
+      screen: Share,
     },
   },
   {
     defaultNavigationOptions: ({ navigation }) => {
       return {
-        title: "Home",
+        title: "Share",
         headerBackground: gradient,
         headerTintColor: colors.white,
         headerRight: createAccountButton(navigation)
@@ -89,6 +90,24 @@ const ContactStack = createStackNavigator(
   }
 );
 
+const ScanStack = createStackNavigator(
+  {
+    Scan: {
+      screen: Scan
+    },
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => {
+      return {
+        title: "Scan",
+        headerBackground: gradient,
+        headerTintColor: colors.white,
+        headerRight: createAccountButton(navigation)
+      }
+    }
+  }
+);
+
 ContactStack.navigationOptions = ({ navigation }) => {
   let navigationOptions = {};
   navigationOptions.header = createHeader();
@@ -98,14 +117,14 @@ ContactStack.navigationOptions = ({ navigation }) => {
 
 const TabNavigator = createBottomTabNavigator(
   {
-    Home: {
-      screen: HomeStack,
+    Share: {
+      screen: ShareStack,
       navigationOptions: {
         tabBarIcon: ({ focused }) => {
           return (
             <Icon_Ionic
               name={ Platform.select({ ios: "ios-home", android: "md-home" }) }
-              size={ 30 }
+              size={ 24 }
               color={ focused ? colors.colorPrimary : colors.grey }
             />
           );
@@ -122,14 +141,37 @@ const TabNavigator = createBottomTabNavigator(
                 ios: "ios-filing",
                 android: "md-filing"
               }) }
-              size={ 30 }
+              size={ 24 }
               color={ focused ? colors.colorPrimary : colors.grey }
             />
           );
         }
       }
     },
+    Scan: {
+      screen: ScanStack,
+      navigationOptions: {
+        tabBarIcon: ({ focused }) => {
+          return (
+            <Icon_Ionic
+              name={ Platform.select({
+                ios: "ios-qr-scanner",
+                android: "md-qr-scanner"
+              }) }
+              size={ 24 }
+              color={ focused ? colors.colorPrimary : colors.grey }
+            />
+          );
+        }
+      }
+    }
   },
+  {
+    tabBarOptions: {
+      activeTintColor: colors.colorPrimary,
+      inactiveTintColor: colors.grey,
+    },
+  }
 );
 
 export const AppContainer = createAppContainer(TabNavigator);
